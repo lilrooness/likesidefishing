@@ -1,7 +1,14 @@
+body {
+  background-image: url("./assets/fishing.png");
+  background-size: cover;
+}
+
+
 .App {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   /*padding: 5%;*/
+
 }
 
 .App > div {
