@@ -1,7 +1,11 @@
 .App {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  padding: 5%;
+  /*padding: 5%;*/
+}
+
+.App > div {
+  padding: 1em;
 }
 
 .inventory {
@@ -17,8 +21,9 @@
   padding: 1em;
 }
 
-.inventory > div:nth-child(odd) {
-  background: #ddd
+.moneyLabel {
+  background-size: cover;
+  text-align: center;
 }
 
 .shop {
@@ -28,26 +33,20 @@
   grid-row: 2;
 }
 
-.shop > div:nth-child(odd) {
-  background: #ddd
-}
-
 .fishingControlls {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   grid-column: 1/4;
-  grid-row: 3;
-  align-self: end;
 }
 
 .control {
   background: #444;
+  background-size: cover;
 }
-
-.fishingControlls > div:nth-child(even) {
-  background: #ddd
-}
-
 
 .shop_slot {
   background: #444;
@@ -59,20 +58,24 @@
   grid-column: 1/3;
   background: #000;
   text-align: center;
+  background-size: cover;
 }
 
 .sellbutton {
   grid-column: 4/6;
   background: #ddd;
   text-align: center;
+  background-size: cover;
 }
 
 .shopButton {
   background: #ccc;
   text-align: center;
+  background-size: cover;
 }
 
 .inventoryButton {
   background: #ccc;
   text-align: center;
+  background-size: cover;
 }

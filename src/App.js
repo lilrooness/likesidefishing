@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import inv_square from './assets/inventory_square2.png'
+import plank_rect from './assets/wood_button.png'
 import './App.css';
 
 import {Items} from './items.js'
@@ -132,9 +133,13 @@ class App extends Component {
     return (
       <div className="App">
         
-        <div className="shopButton" onClick={function(e) {toggleShop()}}><h3>shop</h3></div>
-        <div className="moneyLabel"><h3>${this.state.money}</h3></div>
-        <div className="inventoryButton" onClick={function(e) {toggleInventory()}}><h3>Inventory</h3></div>
+        <div className="shopButton"
+             style={{"backgroundImage": "url(" + plank_rect + ")"}}
+             onClick={function(e) {toggleShop()}}><h3>shop</h3></div>
+        <div className="moneyLabel" style={{"backgroundImage": "url(" + inv_square + ")"}}><h3>Money ${this.state.money}</h3></div>
+        <div className="inventoryButton"
+             style={{"backgroundImage": "url(" + plank_rect + ")"}}
+             onClick={function(e) {toggleInventory()}}><h3>Inventory</h3></div>
 
         <Inventory display={this.state.displayInventory}
                    slots={this.state.inventorySize}
@@ -211,12 +216,12 @@ class FishingControlls extends Component {
 
     return(
       <div className="fishingControlls">
-        <div className="control" onClick={setRod}>Set rod</div>
-        <div className="control">Rod: {this.state.rod}</div>
-        <div className="control" onClick={setBait}>Set bait</div>
-        <div className="control">Bait: {this.state.bait}</div>
-        <div className="control" onClick={castLine}>Cast line</div>
-        <div className="control">Fishing: {this.state.fishing?"Yes":"No"}</div>
+        <div className="control" style={{"backgroundImage": "url(" + plank_rect + ")"}} onClick={setRod}>Set rod</div>
+        <div className="control" style={{"backgroundImage": "url(" + inv_square + ")"}}>Rod: {this.state.rod}</div>
+        <div className="control" style={{"backgroundImage": "url(" + plank_rect + ")"}} onClick={setBait}>Set bait</div>
+        <div className="control" style={{"backgroundImage": "url(" + inv_square + ")"}}>Bait: {this.state.bait}</div>
+        <div className="control" style={{"backgroundImage": "url(" + plank_rect + ")"}} onClick={castLine}>Cast line</div>
+        <div className="control" style={{"backgroundImage": "url(" + inv_square + ")"}}>Fishing: {this.state.fishing?"Yes":"No"}</div>
       </div>
       );
   }
@@ -393,13 +398,15 @@ class Shop extends Component {
         <div className="buybutton" 
              onClick={function(e){
                t.props.buyCallback(t.state.selection)
-             }}>
+             }}
+             style={{"backgroundImage": "url(" + plank_rect + ")"}}>
           BUY {this.state.selection}
         </div>
         <div className="sellbutton"
               onClick={function(e) {
                 t.props.sellCallback()
-              }}>
+              }}
+              style={{"backgroundImage": "url(" + plank_rect + ")"}}>
           SELL
         </div>
       </div>
