@@ -36,6 +36,31 @@ class App extends Component {
       }
     }
 
+    var sellCallback = function() {
+      if(!t.state.selectedInvItem) {
+        return
+      }
+
+      var item = Items[t.state.selectedInvItem]
+
+      var i=0;
+      for(i=0; i<t.state.inventory; i++) {
+        if(t.state.inventory[i] === t.state.selectedInvItem) {
+          break;
+        }
+      }
+      var l = t.state.inventory.length
+      var newInv = t.state.inventory.slice(0,i).concat(t.state.inventory.slice(i+1, l))
+      var newMoney = t.state.money + item.price
+      console.log(newMoney)
+      t.setState({
+        "inventory": newInv,
+        "money": newMoney,
+        "selectedInvItem": ""
+      })
+
+    }
+
     var toggleShop = function() {
       t.setState({
         displayShop: !t.state.displayShop
@@ -118,7 +143,8 @@ class App extends Component {
         <Shop display={this.state.displayShop}
               slots="20"
               goods={this.state.shopGoods}
-              buyCallback={buyCallback}/>
+              buyCallback={buyCallback}
+              sellCallback={sellCallback}/>
         <FishingControlls startFishing={startFishing}
                           stopFishing={stopFishing}
                           selectedInvItem={this.state.selectedInvItem}/>
@@ -335,10 +361,10 @@ class Shop extends Component {
         containsGood = true
       }
 
-      var parent = this
+      var t = this
 
       var click = function(selection) {
-        parent.setState({
+        t.setState({
           selected: true,
           selection: selection
         })
@@ -360,9 +386,15 @@ class Shop extends Component {
         {slots}
         <div className="buybutton" 
              onClick={function(e){
-              t.props.buyCallback(t.state.selection)
-            }}>
+               t.props.buyCallback(t.state.selection)
+             }}>
           BUY {this.state.selection}
+        </div>
+        <div className="sellbutton"
+              onClick={function(e) {
+                t.props.sellCallback()
+              }}>
+          SELL
         </div>
       </div>
       );
