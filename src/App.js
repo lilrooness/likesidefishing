@@ -4,7 +4,7 @@ import inv_square from './assets/inventory_square2.png'
 import plank_rect from './assets/wood_button.png'
 import './App.css';
 
-import {Items} from './items.js'
+import {Items, getItemImage} from './items.js'
 
 class App extends Component {
 
@@ -39,22 +39,23 @@ class App extends Component {
     }
 
     var sellCallback = function() {
+      console.log(t.state.selectedInvItem)
       if(!t.state.selectedInvItem) {
         return
       }
 
       var item = Items[t.state.selectedInvItem]
-
+      var deleteIndex = 0
       var i=0;
-      for(i=0; i<t.state.inventory; i++) {
+      for(i=0; i<t.state.inventory.length; i++) {
         if(t.state.inventory[i] === t.state.selectedInvItem) {
+          deleteIndex = i
           break;
         }
       }
       var l = t.state.inventory.length
-      var newInv = t.state.inventory.slice(0,i).concat(t.state.inventory.slice(i+1, l))
+      var newInv = t.state.inventory.slice(0,deleteIndex).concat(t.state.inventory.slice(deleteIndex+1, l))
       var newMoney = t.state.money + item.price
-      console.log(newMoney)
       t.setState({
         "inventory": newInv,
         "money": newMoney,
@@ -248,10 +249,10 @@ class Slot extends Component {
         })
       }
     }
-
+// {this.props.containsGood? this.props.item : "-"}
     return (
       <div onClick={click} className="slot" style={this.props.style}>
-        {this.props.containsGood? this.props.item : "-"}
+        {getItemImage(this.props.item)}
       </div>);
   }
 }
@@ -338,9 +339,7 @@ class ShopSlot extends Component {
     return (<div className="shop_slot"
         onClick={click}
         style={{"backgroundImage": "url(" + inv_square + ")"}}>
-        {this.state.containsGood? "$"+Items[this.state.contains]["price"] : ""}
-        {" "}        
-        {this.state.contains}
+        {getItemImage(this.state.contains)}
     </div>);
   }
 }
@@ -400,7 +399,7 @@ class Shop extends Component {
                t.props.buyCallback(t.state.selection)
              }}
              style={{"backgroundImage": "url(" + plank_rect + ")"}}>
-          BUY {this.state.selection}
+          BUY {(this.state.selection?this.state.selection+ " $" + Items[this.state.selection].price : "")}
         </div>
         <div className="sellbutton"
               onClick={function(e) {

@@ -26,6 +26,16 @@ body {
   background: #444;
   border: black, 1px, solid;
   padding: 1em;
+  min-height: 50px;
+}
+
+.slot > img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.icon img {
+  width: inherit;
 }
 
 .moneyLabel {
@@ -39,6 +49,7 @@ body {
   grid-column: 1;
   grid-row: 2;
 }
+
 
 .fishingControlls {
   position: fixed;
@@ -59,6 +70,12 @@ body {
   background: #444;
   border: black, 1px, solid;
   padding: 1em;
+  min-height: 50px;
+}
+
+.shop_slot > img {
+  max-height: 100%;
+  max-width: 100%;
 }
 
 .buybutton {
