@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import inv_square from './assets/inventory_square2.png'
 import './App.css';
 
 import {Items} from './items.js'
@@ -269,12 +270,16 @@ class Inventory extends Component {
     var t = this;
 
     var getDivStyle = function(elem) {
+      console.log(`url(${inv_square})`)
       if(t.state.selected == elem) {
         return {
-          border: "solid 2px red"
+          border: "solid 2px red",
+          "backgroundImage": "url(" + inv_square + ")"
         }
       } else {
-        return {}
+        return {
+          "backgroundImage": "url(" + inv_square + ")",
+        }
       }
     }
 
@@ -295,7 +300,7 @@ class Inventory extends Component {
           }}
         />)
       } else {
-        slots.push(<Slot key={i}/>)
+        slots.push(<Slot key={i} style={getDivStyle(i)}/>)
       }
     }
 
@@ -326,7 +331,8 @@ class ShopSlot extends Component {
     }
 
     return (<div className="shop_slot"
-        onClick={click}>
+        onClick={click}
+        style={{"backgroundImage": "url(" + inv_square + ")"}}>
         {this.state.containsGood? "$"+Items[this.state.contains]["price"] : ""}
         {" "}        
         {this.state.contains}
