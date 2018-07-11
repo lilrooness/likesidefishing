@@ -16,7 +16,8 @@ class App extends Component {
       shopGoods: Object.keys(Items),
       displayShop: true,
       displayInventory: true,
-      selectedInvItem: ""
+      selectedInvItem: "",
+      interval_id: ""
     }
   }
 
@@ -54,8 +55,52 @@ class App extends Component {
       console.log(item)
     }
 
-    var startFishing = function(rod, bait) {
-      // TODO: implement fishing
+    var startFishing = function(rodName, baitName) {
+      var rod = Items[rodName]
+      var bait = Items[baitName]
+
+      var itemNames = Object.keys(Items)
+
+      var catchableFish = []
+
+      for(var i=0; i<itemNames.length; i++) {
+        var item = Items[itemNames[i]]
+        if(item.type === "fish" && item.rod_level <= rod.rod_level && item.bait === baitName) {
+          catchableFish.push(itemNames[i])
+        }
+      }
+
+      var intervalId = window.setInterval(function() {
+
+        if(t.state.inventory.length === t.state.inventorySize) {
+          return
+        }
+
+        var luck = Math.random()
+        var choices = []
+        for(var i=0; i<catchableFish.length; i++) {
+          var fish = Items[catchableFish[i]]
+          if(luck > (1 - fish.catch_chance)) {
+            choices.push(catchableFish[i])
+          }
+        }
+
+        if(choices.length > 0) {
+          var choice = choices[Math.floor(Math.random() * choices.length)]
+          t.setState({
+            inventory: t.state.inventory.concat([choice])
+          })
+        }
+
+      }, 1000)
+
+      t.setState({
+        interval_id: intervalId
+      })
+    }
+
+    var stopFishing = function() {
+      window.clearInterval(t.state.interval_id)
     }
 
     return (
@@ -74,7 +119,9 @@ class App extends Component {
               slots="20"
               goods={this.state.shopGoods}
               buyCallback={buyCallback}/>
-        <FishingControlls startFishing={startFishing} selectedInvItem={this.state.selectedInvItem}/>
+        <FishingControlls startFishing={startFishing}
+                          stopFishing={stopFishing}
+                          selectedInvItem={this.state.selectedInvItem}/>
       </div>
     );
   }
@@ -115,6 +162,15 @@ class FishingControlls extends Component {
     }
 
     var castLine = function() {
+
+      if(t.state.fishing) {
+        t.props.stopFishing()
+        t.setState({
+          fishing: false
+        })
+        return
+      }
+
       if(t.state.rod === "" || t.state.bait === "") {
         return
       }
